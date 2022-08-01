@@ -12,7 +12,6 @@ public:
     ~MyString();
     int length() const;
     void print() const;
-    void print() const;
     void println() const;  
 };
 
@@ -25,8 +24,8 @@ MyString::MyString(char c)
 MyString::MyString(const char* str)
 {
     string_length = strlen(str);
-    string_content = new cahr[string_length];
-    for(int i = 0; i != string_length]
+    string_content = new char[string_length];
+    for(int i = 0; i != string_length)
         string_content[i] = str[i];
 }
 
