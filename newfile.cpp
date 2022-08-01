@@ -25,7 +25,7 @@ MyString::MyString(const char* str)
 {
     string_length = strlen(str);
     string_content = new char[string_length];
-    for(int i = 0; i != string_length)
+    for(int i = 0; i != string_length; i++)
         string_content[i] = str[i];
 }
 
