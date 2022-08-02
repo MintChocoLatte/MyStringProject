@@ -19,6 +19,10 @@ public:
     void println() const;  
     MyString& assign(const MyString& str);
     MyString& assign(const char* str);
+    
+    MyString& insert(int loc, const MyString& str);
+    MyString& insert(int loc, const char* str);
+    MyString& insert(int loc, char c);
 };
 
 MyString::MyString(char c) 
@@ -120,6 +124,59 @@ void MyString::reserve(int size)
 }    
 
 
+MyString& MyString::insert(int loc, const MyString& str)
+{
+    //이는 i의 위치 바로 앞에 문자를 삽입하게 된다. 예를 들어서 
+    // abc 라는 문자열에 insert(1, "d")를 하게 된다면 adbc가 된다.
+    
+    // 범위를 벗어나는 입력에 대해서는 삽입을 수행하지 않는다. 
+    if(loc < 0 || loc > string_length)
+        return *this;
+
+    if(string_length + str.string_length > memory_capacity)
+    {
+        //이제 새롭게 동적으로 할당을 해야 한다.
+        memory_capacity = string_length + str.string_length;
+        char* prev_string_content = string_content;
+        string_content = new char[memory_capacity];
+        //일단 insert 되는 부분 직전까지의 내용을 복사한다.
+        int i;
+        for (i = 0; i < loc; i++)
+            string_content[i] = prev_string_content[i];
+        //그리고 새롭게 insert 되는 문자열을 넣는다.
+        for (int j = 0; j != str.string_length; j++)
+            string_content[i+j] = str.string_content[j];
+        //이제 다시 원 문자열의 나머지 뒷부분을 복사한다.
+        for (; i < string_length; i ++)
+            string_content[str.string_length + i] = prev_string_content[i];
+        delete[] prev_string_content;
+        string_length = string_length + str.string_length;
+        return *this;
+    }
+    
+    //만일 초과하지 않는 경우 굳이 동적 할당을 할 필요가 없게 된다.
+    //효율적으로 insert 하기 위해, 밀리는 부분을 먼저 뒤로 밀어버린다.
+    for (int i = string_length - 1; i >= loc; i--)  //뒷부분 문자열 길이가 얼마나되든간 loc에서 넣을문자길이까지밀어 
+        string_content[i + str.string_length] = string_content[i];    
+    for(int i = 0; i < str.string_length; i++)  //그리고 insert 되는 문자 다시 집어넣기
+        string_content[i+loc] = str.string_content[i];
+    string_length = string_length + str.string_length;
+    return *this;
+}
+
+MyString& MyString::insert(int loc, const char* str)
+{
+    MyString temp(str);
+    return insert(loc, temp);
+}
+
+MyString& MyString::insert(int loc, char c)
+{
+    MyString temp(c);
+    return insert(loc, temp);
+} 
+  
+
     
 
 int main()
@@ -130,8 +187,12 @@ int main()
     std::cout << "Capacity : " << str1.capacity() << std::endl;
     std::cout << "String length : " << str1.length() << std::endl;
     str1.println();
+    
+    str1.insert(5, str2);
+    str1.println(); 
     return 0;
 }
+
 
 
 
