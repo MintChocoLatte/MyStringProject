@@ -181,7 +181,7 @@ MyString& MyString::insert(int loc, char c)
 
 int main()
 {
-    MyString str1("very very very long string");
+    MyString str1("very long string");
     MyString str2("<some string inserted between>");
     str1.reserve(30);
     
