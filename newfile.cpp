@@ -23,6 +23,12 @@ public:
     MyString& insert(int loc, const MyString& str);
     MyString& insert(int loc, const char* str);
     MyString& insert(int loc, char c);
+    
+    MyString& erase(int loc, int num);
+    
+    int find(int find_from, MyString& Str) const;
+    int find(int find_from, const char* str) const;
+    int find(int find_from, char c) const;
 };
 
 MyString::MyString(char c) 
@@ -156,7 +162,7 @@ MyString& MyString::insert(int loc, const MyString& str)
     
     //만일 초과하지 않는 경우 굳이 동적 할당을 할 필요가 없게 된다.
     //효율적으로 insert 하기 위해, 밀리는 부분을 먼저 뒤로 밀어버린다.
-    for (int i = string_length - 1; i >= loc; i--)  //뒷부분 문자열 길이가 얼마나되든간 loc에서 넣을문자길이까지밀어 
+    for (int i = string_length - 1; i >= loc; i--)  //뒷부분 문자열 길이가 얼마나되든간 loc에서 넣을 문자 길이까지 밀어 
         string_content[i + str.string_length] = string_content[i];    
     for(int i = 0; i < str.string_length; i++)  //그리고 insert 되는 문자 다시 집어넣기
         string_content[i+loc] = str.string_content[i];
@@ -175,22 +181,56 @@ MyString& MyString::insert(int loc, char c)
     MyString temp(c);
     return insert(loc, temp);
 } 
+
+MyString& MyString::erase(int loc, int num)
+{
+    if(num < 0 || loc < 0 < loc > string_length) // 지역이 잘못되거나 지울 문자 수가 잘못된 경우
+        return *this;
+
+    for(int i = loc + num; i < string_length; i++)
+        string_content[i - num] = string_content[i];
+    string_length -= num;
+    return *this;
+} 
+
+int MyString::find(int find_from, MyString& str) const {
+    int i, j;
+    if (str.string_length == 0)
+        return -1;
+    for(i = find_from; i <= string_length - str.string_length; i++)
+    {
+        for(j = 0; j < str.string_length; j++)
+        {
+            if(string_content[i + j] != str.string_content[j])
+                break;
+        }
+        if (j == str.string_length) //= 찾으려는 문자열의 끝까지 반복문이 진행되었다면
+            return i;
+    } 
+    return -1;  //찾지 못했을 경우
+}
+    
+int MyString::find(int find_from, const char* str) const
+{
+    MyString temp(str);
+    return find(find_from, temp);
+}
+
+int MyString::find(int find_from, const char* str) const
+{
+    MyString temp(c);
+    return find(find_from, temp);
+}   
   
 
     
 
 int main()
 {
-    MyString str1("very long string");
-    MyString str2("<some string inserted between>");
-    str1.reserve(30);
-    
-    std::cout << "Capacity : " << str1.capacity() << std::endl;
-    std::cout << "String length : " << str1.length() << std::endl;
-    str1.println();
-    
-    str1.insert(5, str2);
-    str1.println(); 
+    MyString str1("this is a very very long string");
+    std::cout << "Location of first <very> in the string : " << str.find(0, "very") << std::endl;
+    std::cout << "Location of second <very> in the string : " << str1.find(str1.find(0, "very) + 1
+        << std::endl; 
     return 0;
 }
 
