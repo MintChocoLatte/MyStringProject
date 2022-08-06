@@ -226,7 +226,7 @@ int MyString::find(int find_from, char c) const
 }   
   
 
-int MyString::compare(const MyString& str) const;
+int MyString::compare(const MyString& str) const
 {
     /*
     (*this) - (str)을 수행해서 그 1, 0 , -1로 로 그 결과를 리턴한다
@@ -260,7 +260,7 @@ char MyString::at(int i) const
 int main()
 {
     MyString str1("abcdef");
-    MySrring str2("abcde");
+    MyString str2("abcde");
     std::cout << "str1 and str2 compare : " << str1.compare(str2) << std:: endl;
     return 0;
 }
