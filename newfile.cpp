@@ -29,6 +29,9 @@ public:
     int find(int find_from, MyString& Str) const;
     int find(int find_from, const char* str) const;
     int find(int find_from, char c) const;
+    
+    int compare(const MyString& str) const;
+    char at(int i) const;
 };
 
 MyString::MyString(char c) 
@@ -223,14 +226,42 @@ int MyString::find(int find_from, char c) const
 }   
   
 
-    
+int MyString::compare(const MyString& str) const;
+{
+    /*
+    (*this) - (str)을 수행해서 그 1, 0 , -1로 로 그 결과를 리턴한다
+    1은 (*this) 가 사전식으로 더 그 뒤에 온다는 의미. 0은 두 문자열이 같다는 의미, 
+    -1은 (*this)가 사전식으로 더 앞에 온다는 의미이다.
+    */
+    for(int = 0; i < std::min(string_length, str.string_length); i++)
+    {
+        if(string_content[i] > str.string_content[i])
+            return 1;
+        else if(string_content[i] < str.string_content[i])
+            return -1;
+    }
+    //반복문을 문자열 끝까지 했는데 리턴이 안나왔으므로 여기까지 왔다면 겹치는 문자에 한해서는 동일하는 뜻.
+    if(string_length == str.string_length)
+        return 0;
+    else if(string_length > str.string_length)
+        return 1;
+    return -1;
+    // abc 뒤에 abcd.  
+}
+
+char MyString::at(int i) const
+{
+    if (i >= string_length || i < 0)
+        return 0;
+    else
+        return string_content[i];
+}   
 
 int main()
 {
-    MyString str1("this is a very very long string");
-    std::cout << "Location of first <very> in the string : " << str1.find(0, "very") << std::endl;
-    std::cout << "Location of second <very> in the string : " 
-        << str1.find(str1.find(0, "very") + 1, "very") << std::endl; 
+    MyString str1("abcdef");
+    MySrring str2("abcde");
+    std::cout << "str1 and str2 compare : " << str1.compare(str2) << std:: endl;
     return 0;
 }
 
