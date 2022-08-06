@@ -228,7 +228,7 @@ int MyString::find(int find_from, const char* str) const
 int main()
 {
     MyString str1("this is a very very long string");
-    std::cout << "Location of first <very> in the string : " << str.find(0, "very") << std::endl;
+    std::cout << "Location of first <very> in the string : " << str1.find(0, "very") << std::endl;
     std::cout << "Location of second <very> in the string : " 
         << str1.find(str1.find(0, "very") + 1, "very") << std::endl; 
     return 0;
