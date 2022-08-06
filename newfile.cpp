@@ -233,7 +233,7 @@ int MyString::compare(const MyString& str) const
     1은 (*this) 가 사전식으로 더 그 뒤에 온다는 의미. 0은 두 문자열이 같다는 의미, 
     -1은 (*this)가 사전식으로 더 앞에 온다는 의미이다.
     */
-    for(int = 0; i < std::min(string_length, str.string_length); i++)
+    for(int i = 0; i < std::min(string_length, str.string_length); i++)
     {
         if(string_content[i] > str.string_content[i])
             return 1;
