@@ -18,7 +18,7 @@ public:
 
 int main()
 {
-    A a()10);
+    A a(10);
     a.DoSomething(3);
     a.PrintData();
 }     
