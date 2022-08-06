@@ -216,7 +216,7 @@ int MyString::find(int find_from, const char* str) const
     return find(find_from, temp);
 }
 
-int MyString::find(int find_from, const char* str) const
+int MyString::find(int find_from, char c) const
 {
     MyString temp(c);
     return find(find_from, temp);
