@@ -3,7 +3,7 @@
 class A 
 {
 private:
-    int data_;    
+    mutable int data_;    
 public:
     A(int data) : data_(data)   {}
     void DoSomething(int x) const
